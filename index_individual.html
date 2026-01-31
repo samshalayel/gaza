@@ -1254,11 +1254,11 @@
         statusTitle.innerHTML = '<i class="fas fa-child"></i> Children Status';
         filtersContainer.appendChild(statusTitle);
 
-        // Total Children slider (max from data: 1245)
-        createSlider('Total Children', 'TotalChildren', 'fa-users', 0, 1400);
-        createSlider('On Schedule', 'OnSchedule', 'fa-calendar-check', 0, 1300);
-        createSlider('Defaulter', 'Defaulter', 'fa-user-clock', 0, 160);
-        createSlider('Zero Dose', 'ZeroDose', 'fa-ban', 0, 15);
+        // Total Children slider (max: 1245)
+        createSlider('Total Children', 'TotalChildren', 'fa-users', 0, 1245);
+        createSlider('On Schedule', 'OnSchedule', 'fa-calendar-check', 0, 1117);
+        createSlider('Defaulter', 'Defaulter', 'fa-user-clock', 0, 126);
+        createSlider('Zero Dose', 'ZeroDose', 'fa-ban', 0, 12);
 
         // === VACCINATION VISITS ===
         var visitsTitle = document.createElement('div');
@@ -1267,38 +1267,38 @@
         filtersContainer.appendChild(visitsTitle);
 
         // Birth vaccines (max: BCG 309, HepB 309)
-        createSlider('BCG (Birth)', 'BCG', 'fa-baby', 0, 350);
-        createSlider('HepB (Birth)', 'HepB', 'fa-baby', 0, 350);
+        createSlider('BCG (Birth)', 'BCG', 'fa-baby', 0, 309);
+        createSlider('HepB (Birth)', 'HepB', 'fa-baby', 0, 309);
 
         // 1 Month (max: IPV1 135)
-        createSlider('IPV1 (1 Month)', 'IPV1', 'fa-syringe', 0, 160);
+        createSlider('IPV1 (1 Month)', 'IPV1', 'fa-syringe', 0, 135);
 
-        // 2 Months vaccines (max: IPV2 255, bOPV1 256, Rota1 258, PCV1 256, Penta1 256)
-        createSlider('IPV2 (2 Months)', 'IPV2', 'fa-syringe', 0, 300);
-        createSlider('bOPV1 (2 Months)', 'bOPV1', 'fa-syringe', 0, 300);
-        createSlider('Rota1 (2 Months)', 'Rota1', 'fa-syringe', 0, 300);
-        createSlider('PCV1 (2 Months)', 'PCV1', 'fa-syringe', 0, 300);
-        createSlider('Penta1 (2 Months)', 'Penta1', 'fa-syringe', 0, 300);
+        // 2 Months vaccines
+        createSlider('IPV2 (2 Months)', 'IPV2', 'fa-syringe', 0, 255);
+        createSlider('bOPV1 (2 Months)', 'bOPV1', 'fa-syringe', 0, 256);
+        createSlider('Rota1 (2 Months)', 'Rota1', 'fa-syringe', 0, 258);
+        createSlider('PCV1 (2 Months)', 'PCV1', 'fa-syringe', 0, 256);
+        createSlider('Penta1 (2 Months)', 'Penta1', 'fa-syringe', 0, 256);
 
-        // 4 Months (max: bOPV2 189, Rota2 198, PCV2 190, Penta2 190)
-        createSlider('bOPV2 (4 Months)', 'bOPV2', 'fa-syringe', 0, 220);
-        createSlider('Rota2 (4 Months)', 'Rota2', 'fa-syringe', 0, 220);
-        createSlider('PCV2 (4 Months)', 'PCV2', 'fa-syringe', 0, 220);
-        createSlider('Penta2 (4 Months)', 'Penta2', 'fa-syringe', 0, 220);
+        // 4 Months
+        createSlider('bOPV2 (4 Months)', 'bOPV2', 'fa-syringe', 0, 189);
+        createSlider('Rota2 (4 Months)', 'Rota2', 'fa-syringe', 0, 198);
+        createSlider('PCV2 (4 Months)', 'PCV2', 'fa-syringe', 0, 190);
+        createSlider('Penta2 (4 Months)', 'Penta2', 'fa-syringe', 0, 190);
 
-        // 6 Months (max: bOPV3 162, Rota3 225, Penta3 160)
-        createSlider('bOPV3 (6 Months)', 'bOPV3', 'fa-syringe', 0, 200);
-        createSlider('Rota3 (6 Months)', 'Rota3', 'fa-syringe', 0, 260);
-        createSlider('Penta3 (6 Months)', 'Penta3', 'fa-syringe', 0, 200);
+        // 6 Months
+        createSlider('bOPV3 (6 Months)', 'bOPV3', 'fa-syringe', 0, 162);
+        createSlider('Rota3 (6 Months)', 'Rota3', 'fa-syringe', 0, 225);
+        createSlider('Penta3 (6 Months)', 'Penta3', 'fa-syringe', 0, 160);
 
-        // 12 Months (max: PCV3 148, MMR1 148)
-        createSlider('PCV3 (12 Months)', 'PCV3', 'fa-syringe', 0, 180);
-        createSlider('MMR1 (12 Months)', 'MMR1', 'fa-syringe', 0, 180);
+        // 12 Months
+        createSlider('PCV3 (12 Months)', 'PCV3', 'fa-syringe', 0, 148);
+        createSlider('MMR1 (12 Months)', 'MMR1', 'fa-syringe', 0, 148);
 
-        // 18 Months (max: bOPV4 92, MMR2 93, DTP 88)
-        createSlider('bOPV4 (18 Months)', 'bOPV4', 'fa-syringe', 0, 110);
-        createSlider('MMR2 (18 Months)', 'MMR2', 'fa-syringe', 0, 110);
-        createSlider('DTP (18 Months)', 'DTP', 'fa-syringe', 0, 100);
+        // 18 Months
+        createSlider('bOPV4 (18 Months)', 'bOPV4', 'fa-syringe', 0, 92);
+        createSlider('MMR2 (18 Months)', 'MMR2', 'fa-syringe', 0, 93);
+        createSlider('DTP (18 Months)', 'DTP', 'fa-syringe', 0, 88);
 
         function createSlider(label, id, icon, min, max) {
             var section = document.createElement('div');
