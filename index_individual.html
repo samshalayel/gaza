@@ -1067,12 +1067,10 @@
                                 if (!sliderEl || !sliderEl.noUiSlider) continue;
                                 var sliderVals = sliderEl.noUiSlider.get();
                                 try {
-                                    if (key in features[0].properties) {
-                                        for (var i = features.length - 1; i >= 0; --i) {
-                                            var val = parseInt(features[i].properties[key]) || 0;
-                                            if (val < parseInt(sliderVals[0]) || val > parseInt(sliderVals[1])) {
-                                                features.splice(i, 1);
-                                            }
+                                    for (var i = features.length - 1; i >= 0; --i) {
+                                        var val = parseInt(features[i].properties[key]) || 0;
+                                        if (val < parseInt(sliderVals[0]) || val > parseInt(sliderVals[1])) {
+                                            features.splice(i, 1);
                                         }
                                     }
                                 } catch(err) {}
@@ -1268,7 +1266,7 @@
 
         // Birth vaccines (max: BCG 309, HepB 309)
         createSlider('BCG (Birth)', 'BCG', 'fa-baby', 0, 309);
-        createSlider('HepB (Birth)', 'HepB', 'fa-baby', 0, 309);
+        createSlider('HepB (Birth)', 'HepB', 'fa-baby', 0, 320);
 
         // 1 Month (max: IPV1 135)
         createSlider('IPV1 (1 Month)', 'IPV1', 'fa-syringe', 0, 135);
