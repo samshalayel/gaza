@@ -662,7 +662,7 @@
                             </div>
                         </div>
                         <div class="summary-section">
-                            <div class="summary-section-title">Age Groups (0-36 Months)</div>
+                            <div class="summary-section-title">Age Groups</div>
                             <div class="summary-grid three-cols">
                                 <div class="summary-stat">
                                     <div class="value" id="sum-age012">0</div>
@@ -674,7 +674,7 @@
                                 </div>
                                 <div class="summary-stat">
                                     <div class="value" id="sum-age2436">0</div>
-                                    <div class="label">24-36 M</div>
+                                    <div class="label">24+ M</div>
                                 </div>
                             </div>
                         </div>
@@ -876,21 +876,22 @@
                 '<div class="popup-section">' +
                 '<div class="popup-section-title">Age Groups (Target: 0-36 Months)</div>' +
                 '<div class="popup-grid three-cols">' +
-                '<div class="popup-stat"><div class="value">' + (p['Age 0-12 Months'] || 0) + '</div><div class="label">0-12 M</div></div>' +
-                '<div class="popup-stat"><div class="value">' + (p['Age 12-24 Months'] || 0) + '</div><div class="label">12-24 M</div></div>' +
-                '<div class="popup-stat"><div class="value">' + (p['Age 24-36 Months'] || 0) + '</div><div class="label">24-36 M</div></div>' +
+                '<div class="popup-stat"><div class="value">' + (p['Age 0-12'] || 0) + '</div><div class="label">0-12 M</div></div>' +
+                '<div class="popup-stat"><div class="value">' + (p['Age 12-24'] || 0) + '</div><div class="label">12-24 M</div></div>' +
+                '<div class="popup-stat"><div class="value">' + (p['Age 24+'] || 0) + '</div><div class="label">24+ M</div></div>' +
                 '</div></div>' +
 
                 '<div class="popup-section">' +
-                '<div class="popup-section-title">Vaccination Visits (Palestinian Schedule)</div>' +
+                '<div class="popup-section-title">Vaccines Given</div>' +
                 '<div class="vaccine-grid">' +
-                '<div class="vaccine-item"><div class="count">' + (p['Visit1_Birth'] || 0) + '</div>Birth</div>' +
-                '<div class="vaccine-item"><div class="count">' + (p['Visit2_1Month'] || 0) + '</div>1 Month</div>' +
-                '<div class="vaccine-item"><div class="count">' + (p['Visit3_2Months'] || 0) + '</div>2 Months</div>' +
-                '<div class="vaccine-item"><div class="count">' + (p['Visit4_4Months'] || 0) + '</div>4 Months</div>' +
-                '<div class="vaccine-item"><div class="count">' + (p['Visit5_6Months'] || 0) + '</div>6 Months</div>' +
-                '<div class="vaccine-item"><div class="count">' + (p['Visit6_12Months'] || 0) + '</div>12 Months</div>' +
-                '<div class="vaccine-item"><div class="count">' + (p['Visit7_18Months'] || 0) + '</div>18 Months</div>' +
+                '<div class="vaccine-item"><div class="count">' + (p['BCG'] || 0) + '</div>BCG</div>' +
+                '<div class="vaccine-item"><div class="count">' + (p['IPV1'] || 0) + '</div>IPV1</div>' +
+                '<div class="vaccine-item"><div class="count">' + (p['IPV2'] || 0) + '</div>IPV2</div>' +
+                '<div class="vaccine-item"><div class="count">' + (p['Penta1'] || 0) + '</div>Penta1</div>' +
+                '<div class="vaccine-item"><div class="count">' + (p['Penta2'] || 0) + '</div>Penta2</div>' +
+                '<div class="vaccine-item"><div class="count">' + (p['Penta3'] || 0) + '</div>Penta3</div>' +
+                '<div class="vaccine-item"><div class="count">' + (p['MMR1'] || 0) + '</div>MMR1</div>' +
+                '<div class="vaccine-item"><div class="count">' + (p['MMR2'] || 0) + '</div>MMR2</div>' +
                 '</div></div>' +
 
                 '</div>';
@@ -901,18 +902,22 @@
         function style_vaccination_data_0(feature) {
             var totalChildren = feature.properties['Total Children'] || 0;
 
-            // Circle size based on total children: 0-200, 200-400, 400-600, 600-800, 800-1000
+            // Circle size based on total children (adjusted for aggregated data range 0-1262)
             var radius;
-            if (totalChildren <= 200) {
+            if (totalChildren === 0) {
+                radius = 4;
+            } else if (totalChildren <= 50) {
                 radius = 6;
+            } else if (totalChildren <= 100) {
+                radius = 8;
+            } else if (totalChildren <= 200) {
+                radius = 10;
             } else if (totalChildren <= 400) {
-                radius = 9;
-            } else if (totalChildren <= 600) {
-                radius = 12;
-            } else if (totalChildren <= 800) {
-                radius = 15;
-            } else {
+                radius = 14;
+            } else if (totalChildren <= 700) {
                 radius = 18;
+            } else {
+                radius = 24;
             }
 
             // Color based on governorate
@@ -1000,13 +1005,19 @@
             "On Schedule": "int",
             "Defaulter": "int",
             "Zero Dose": "int",
-            "Visit1_Birth": "int",
-            "Visit2_1Month": "int",
-            "Visit3_2Months": "int",
-            "Visit4_4Months": "int",
-            "Visit5_6Months": "int",
-            "Visit6_12Months": "int",
-            "Visit7_18Months": "int"
+            "BCG": "int",
+            "IPV1": "int",
+            "Penta1": "int",
+            "Penta2": "int",
+            "Penta3": "int",
+            "bOPV1": "int",
+            "bOPV3": "int",
+            "bOPV4": "int",
+            "PCV1": "int",
+            "PCV3": "int",
+            "MMR1": "int",
+            "MMR2": "int",
+            "DTP": "int"
         };
 
         function filterFunc() {
@@ -1087,20 +1098,21 @@
                 onSchedule += p['On Schedule'] || 0;
                 defaulter += p['Defaulter'] || 0;
                 zeroDose += p['Zero Dose'] || 0;
-                age012 += p['Age 0-12 Months'] || 0;
-                age1224 += p['Age 12-24 Months'] || 0;
-                age2436 += p['Age 24-36 Months'] || 0;
-                v1 += p['Visit1_Birth'] || 0;
-                v2 += p['Visit2_1Month'] || 0;
-                v3 += p['Visit3_2Months'] || 0;
-                v4 += p['Visit4_4Months'] || 0;
-                v5 += p['Visit5_6Months'] || 0;
-                v6 += p['Visit6_12Months'] || 0;
-                v7 += p['Visit7_18Months'] || 0;
+                age012 += p['Age 0-12'] || 0;
+                age1224 += p['Age 12-24'] || 0;
+                age2436 += p['Age 24+'] || 0;
+                // Calculate visits from individual vaccines
+                v1 += (p['BCG'] || 0) + (p['Hep'] || 0);
+                v2 += p['IPV1'] || 0;
+                v3 += (p['IPV2'] || 0) + (p['bOPV1'] || 0) + (p['Rota1'] || 0) + (p['PCV1'] || 0) + (p['Penta1'] || 0);
+                v4 += (p['bOPV2'] || 0) + (p['Rota2'] || 0) + (p['PCV2'] || 0) + (p['Penta2'] || 0);
+                v5 += (p['bOPV3'] || 0) + (p['Rota3'] || 0) + (p['Penta3'] || 0);
+                v6 += (p['PCV3'] || 0) + (p['MMR1'] || 0);
+                v7 += (p['bOPV4'] || 0) + (p['MMR2'] || 0) + (p['DTP'] || 0);
 
                 // Individual vaccines
                 bcg += p['BCG'] || 0;
-                hepb += p['HepB'] || 0;
+                hepb += p['Hep'] || 0;
                 ipv1 += p['IPV1'] || 0;
                 ipv2 += p['IPV2'] || 0;
                 penta1 += p['Penta1'] || 0;
@@ -1225,24 +1237,41 @@
         filtersContainer.appendChild(statusTitle);
 
         // Total Children slider
-        createSlider('Total Children', 'TotalChildren', 'fa-users', 0, 1000);
-        createSlider('On Schedule', 'OnSchedule', 'fa-calendar-check', 0, 800);
+        createSlider('Total Children', 'TotalChildren', 'fa-users', 0, 1300);
+        createSlider('On Schedule', 'OnSchedule', 'fa-calendar-check', 0, 1200);
         createSlider('Defaulter', 'Defaulter', 'fa-user-clock', 0, 200);
-        createSlider('Zero Dose', 'ZeroDose', 'fa-ban', 0, 100);
+        createSlider('Zero Dose', 'ZeroDose', 'fa-ban', 0, 30);
 
         // === VACCINATION VISITS ===
         var visitsTitle = document.createElement('div');
         visitsTitle.className = 'section-title';
-        visitsTitle.innerHTML = '<i class="fas fa-syringe"></i> Vaccination Visits (Palestinian Schedule)';
+        visitsTitle.innerHTML = '<i class="fas fa-syringe"></i> Vaccines (Palestinian Schedule)';
         filtersContainer.appendChild(visitsTitle);
 
-        createSlider('Visit 1: Birth (BCG, HepB)', 'Visit1_Birth', 'fa-baby', 0, 400);
-        createSlider('Visit 2: 1 Month (IPV1)', 'Visit2_1Month', 'fa-syringe', 0, 100);
-        createSlider('Visit 3: 2 Months (5 vaccines)', 'Visit3_2Months', 'fa-syringe', 0, 1500);
-        createSlider('Visit 4: 4 Months (4 vaccines)', 'Visit4_4Months', 'fa-syringe', 0, 500);
-        createSlider('Visit 5: 6 Months (3 vaccines)', 'Visit5_6Months', 'fa-syringe', 0, 300);
-        createSlider('Visit 6: 12 Months (PCV3, MMR1)', 'Visit6_12Months', 'fa-syringe', 0, 200);
-        createSlider('Visit 7: 18 Months (bOPV4, MMR2, DTP)', 'Visit7_18Months', 'fa-syringe', 0, 300);
+        // Birth vaccines
+        createSlider('BCG (Birth)', 'BCG', 'fa-baby', 0, 320);
+
+        // 1 Month
+        createSlider('IPV1 (1 Month)', 'IPV1', 'fa-syringe', 0, 160);
+
+        // 2 Months vaccines
+        createSlider('Penta1 (2 Months)', 'Penta1', 'fa-syringe', 0, 260);
+        createSlider('bOPV1 (2 Months)', 'bOPV1', 'fa-syringe', 0, 260);
+        createSlider('PCV1 (2 Months)', 'PCV1', 'fa-syringe', 0, 260);
+
+        // 4-6 Months
+        createSlider('Penta2 (4 Months)', 'Penta2', 'fa-syringe', 0, 200);
+        createSlider('Penta3 (6 Months)', 'Penta3', 'fa-syringe', 0, 160);
+        createSlider('bOPV3 (6 Months)', 'bOPV3', 'fa-syringe', 0, 160);
+
+        // 12 Months
+        createSlider('PCV3 (12 Months)', 'PCV3', 'fa-syringe', 0, 150);
+        createSlider('MMR1 (12 Months)', 'MMR1', 'fa-syringe', 0, 150);
+
+        // 18 Months
+        createSlider('bOPV4 (18 Months)', 'bOPV4', 'fa-syringe', 0, 90);
+        createSlider('MMR2 (18 Months)', 'MMR2', 'fa-syringe', 0, 100);
+        createSlider('DTP (18 Months)', 'DTP', 'fa-syringe', 0, 80);
 
         function createSlider(label, id, icon, min, max) {
             var section = document.createElement('div');
