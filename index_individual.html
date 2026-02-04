@@ -1080,14 +1080,15 @@
                     window[lyr["options"]["layerName"]].clearLayers();
                     window[lyr["options"]["layerName"]].addData(features);
 
-                    // Update summary card
-                    updateSummaryCard(features);
+                    // Update summary card - check if filters are applied
+                    var filtersApplied = features.length < json_vaccination_individual_data.features.length;
+                    updateSummaryCard(features, !filtersApplied);
                 }
             });
         }
 
         // Update Summary Card function
-        function updateSummaryCard(features) {
+        function updateSummaryCard(features, useCorrectTotals) {
             var totalChildren = 0;
             var onSchedule = 0;
             var defaulter = 0;
@@ -1107,38 +1108,74 @@
             var mmr1 = 0, mmr2 = 0;
             var dtp = 0;
 
-            features.forEach(function(f) {
-                var p = f.properties;
-                totalChildren += p['TotalChildren'] || 0;
-                onSchedule += p['OnSchedule'] || 0;
-                defaulter += p['Defaulter'] || 0;
-                zeroDose += p['ZeroDose'] || 0;
-                age012 += p['Age 0-12'] || 0;
-                age1224 += p['Age 12-24'] || 0;
-                age2436 += p['Age 24+'] || 0;
+            // Use correct totals from summary if showing all facilities
+            if (useCorrectTotals && json_vaccination_individual_data.summary) {
+                var s = json_vaccination_individual_data.summary;
+                totalChildren = s.TotalChildren || 0;
+                onSchedule = s.OnSchedule || 0;
+                defaulter = s.Defaulter || 0;
+                zeroDose = s.ZeroDose || 0;
+                age012 = s.Age012 || 0;
+                age1224 = s.Age1224 || 0;
+                age2436 = s.Age24plus || 0;
 
-                // Individual vaccines
-                bcg += p['BCG'] || 0;
-                hepb += p['HepB'] || 0;
-                ipv1 += p['IPV1'] || 0;
-                ipv2 += p['IPV2'] || 0;
-                penta1 += p['Penta1'] || 0;
-                penta2 += p['Penta2'] || 0;
-                penta3 += p['Penta3'] || 0;
-                bopv1 += p['bOPV1'] || 0;
-                bopv2 += p['bOPV2'] || 0;
-                bopv3 += p['bOPV3'] || 0;
-                bopv4 += p['bOPV4'] || 0;
-                rota1 += p['Rota1'] || 0;
-                rota2 += p['Rota2'] || 0;
-                rota3 += p['Rota3'] || 0;
-                pcv1 += p['PCV1'] || 0;
-                pcv2 += p['PCV2'] || 0;
-                pcv3 += p['PCV3'] || 0;
-                mmr1 += p['MMR1'] || 0;
-                mmr2 += p['MMR2'] || 0;
-                dtp += p['DTP'] || 0;
-            });
+                // Vaccines from summary
+                var vax = s.vaccines || {};
+                bcg = vax['BCG'] || 0;
+                hepb = vax['HepB'] || 0;
+                ipv1 = vax['IPV1'] || 0;
+                ipv2 = vax['IPV2'] || 0;
+                penta1 = vax['Penta1'] || 0;
+                penta2 = vax['Penta2'] || 0;
+                penta3 = vax['Penta3'] || 0;
+                bopv1 = vax['bOPV1'] || 0;
+                bopv2 = vax['bOPV2'] || 0;
+                bopv3 = vax['bOPV3'] || 0;
+                bopv4 = vax['bOPV4'] || 0;
+                rota1 = vax['Rota1'] || 0;
+                rota2 = vax['Rota2'] || 0;
+                rota3 = vax['Rota3'] || 0;
+                pcv1 = vax['PCV1'] || 0;
+                pcv2 = vax['PCV2'] || 0;
+                pcv3 = vax['PCV3'] || 0;
+                mmr1 = vax['MMR1'] || 0;
+                mmr2 = vax['MMR2'] || 0;
+                dtp = vax['DTP'] || 0;
+            } else {
+                // Sum from filtered features
+                features.forEach(function(f) {
+                    var p = f.properties;
+                    totalChildren += p['TotalChildren'] || 0;
+                    onSchedule += p['OnSchedule'] || 0;
+                    defaulter += p['Defaulter'] || 0;
+                    zeroDose += p['ZeroDose'] || 0;
+                    age012 += p['Age 0-12'] || 0;
+                    age1224 += p['Age 12-24'] || 0;
+                    age2436 += p['Age 24+'] || 0;
+
+                    // Individual vaccines
+                    bcg += p['BCG'] || 0;
+                    hepb += p['HepB'] || 0;
+                    ipv1 += p['IPV1'] || 0;
+                    ipv2 += p['IPV2'] || 0;
+                    penta1 += p['Penta1'] || 0;
+                    penta2 += p['Penta2'] || 0;
+                    penta3 += p['Penta3'] || 0;
+                    bopv1 += p['bOPV1'] || 0;
+                    bopv2 += p['bOPV2'] || 0;
+                    bopv3 += p['bOPV3'] || 0;
+                    bopv4 += p['bOPV4'] || 0;
+                    rota1 += p['Rota1'] || 0;
+                    rota2 += p['Rota2'] || 0;
+                    rota3 += p['Rota3'] || 0;
+                    pcv1 += p['PCV1'] || 0;
+                    pcv2 += p['PCV2'] || 0;
+                    pcv3 += p['PCV3'] || 0;
+                    mmr1 += p['MMR1'] || 0;
+                    mmr2 += p['MMR2'] || 0;
+                    dtp += p['DTP'] || 0;
+                });
+            }
 
             // Calculate visits from individual vaccines
             v1 = bcg + hepb;
@@ -1339,8 +1376,8 @@
             }
         }
 
-        // Initialize summary card with all data on page load
-        updateSummaryCard(json_vaccination_individual_data.features);
+        // Initialize summary card with all data on page load (use correct totals)
+        updateSummaryCard(json_vaccination_individual_data.features, true);
         </script>
     </body>
 </html>
