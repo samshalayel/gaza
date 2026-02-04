@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
@@ -802,7 +802,7 @@
         <script src="js/leaflet-search.js"></script>
         <script src="js/nouislider.min.js"></script>
         <script src="js/wNumb.js"></script>
-        <script src="data/vaccination_individual_data.js"></script>
+        <script src="data/vaccination_individual_data.js?v=20260204"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -912,22 +912,22 @@
         function style_vaccination_data_0(feature) {
             var totalChildren = feature.properties['TotalChildren'] || 0;
 
-            // Circle size based on total children (adjusted for individual data range 0-1245)
+            // Circle size based on total children (range 0-1235)
             var radius;
             if (totalChildren === 0) {
-                radius = 4;
+                radius = 5;
+            } else if (totalChildren <= 20) {
+                radius = 7;
             } else if (totalChildren <= 50) {
-                radius = 6;
+                radius = 9;
             } else if (totalChildren <= 100) {
-                radius = 8;
+                radius = 12;
             } else if (totalChildren <= 200) {
-                radius = 10;
-            } else if (totalChildren <= 400) {
-                radius = 14;
-            } else if (totalChildren <= 700) {
-                radius = 18;
+                radius = 15;
+            } else if (totalChildren <= 500) {
+                radius = 20;
             } else {
-                radius = 24;
+                radius = 28;
             }
 
             // Color based on governorate
@@ -1289,11 +1289,11 @@
         statusTitle.innerHTML = '<i class="fas fa-child"></i> Children Status';
         filtersContainer.appendChild(statusTitle);
 
-        // Total Children slider (max: 1245)
-        createSlider('Total Children', 'TotalChildren', 'fa-users', 0, 1245);
-        createSlider('On Schedule', 'OnSchedule', 'fa-calendar-check', 0, 1117);
-        createSlider('Defaulter', 'Defaulter', 'fa-user-clock', 0, 126);
-        createSlider('Zero Dose', 'ZeroDose', 'fa-ban', 0, 12);
+        // Total Children slider
+        createSlider('Total Children', 'TotalChildren', 'fa-users', 0, 1235);
+        createSlider('On Schedule', 'OnSchedule', 'fa-calendar-check', 0, 32);
+        createSlider('Defaulter', 'Defaulter', 'fa-user-clock', 0, 363);
+        createSlider('Zero Dose', 'ZeroDose', 'fa-ban', 0, 3545);
 
         // === VACCINATION VISITS ===
         var visitsTitle = document.createElement('div');
@@ -1381,3 +1381,4 @@
         </script>
     </body>
 </html>
+
