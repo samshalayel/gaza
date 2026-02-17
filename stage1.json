@@ -15,11 +15,11 @@
       "data": {
         "group": "S1",
         "label": "Stage 1 — Product Shape",
-        "description": "",
+        "description": "Analyzing the current ticket management system built with old technologies. The dashboard shows inaccurate numbers, completed requests without user confirmation, and jumbled categories. There are also multiple requests for devices (e.g., 5 sonar imaging device requests without serial numbers to identify which device has been serviced). The system is frequently unresponsive, with server errors leading to user dissatisfaction due to its unavailability.",
         "aiPercentage": 20,
         "humanPercentage": 80,
-        "aiResponsibilities": [],
-        "humanResponsibilities": [],
+        "aiResponsibilities": ["Initial data analysis and reporting"],
+        "humanResponsibilities": ["Customization and in-depth problem-solving"],
         "stageNumber": 1,
         "customFields": {}
       },
@@ -32,7 +32,7 @@
     {
       "id": "insight-node-2",
       "type": "insight-node",
-      "data": { "group": "S1", "label": "Insight", "description": "" },
+      "data": { "group": "S1", "label": "Insight", "description": "Understanding the underlying issues with ticket tracking accuracy, performance, and user satisfaction." },
       "position": { "x": 210, "y": 285 },
       "width": 300,
       "height": 297,
@@ -42,7 +42,7 @@
     {
       "id": "outcome-node-3",
       "type": "outcome-node",
-      "data": { "group": "S1", "label": "Outcome", "description": "" },
+      "data": { "group": "S1", "label": "Outcome", "description": "Better tracking system that ensures accuracy, categorization, and systematic closure of tickets with confirmation." },
       "position": { "x": 570, "y": 90 },
       "width": 300,
       "height": 299,
@@ -52,7 +52,7 @@
     {
       "id": "direction-node-4",
       "type": "direction-node",
-      "data": { "group": "S1", "label": "Direction", "description": "" },
+      "data": { "group": "S1", "label": "Direction", "description": "Implement modern technologies for efficient ticket management, with focus on user feedback and system uptime." },
       "position": { "x": 915, "y": 225 },
       "width": 300,
       "height": 299,
@@ -65,7 +65,7 @@
       "data": {
         "group": "S1",
         "label": "S1 Blocking Gate",
-        "description": "",
+        "description": "Evaluating potential barriers in system transformation.",
         "gateType": "product",
         "decisionAuthority": "Human Only",
         "gateStatus": "pending",
@@ -82,7 +82,7 @@
     {
       "id": "alignment-gate-6",
       "type": "alignment-gate",
-      "data": { "group": "S1", "label": "Alignment Gate", "description": "Non-blocking: مراجعة سريعة لتأكيد أن الأطراف متفقة على شكل المنتج (Actors/Flow/Rules) قبل التقدم." },
+      "data": { "group": "S1", "label": "Alignment Gate", "description": "Non-blocking: Quick review to ensure all parties agree on the product shape (Actors/Flow/Rules) before proceeding." },
       "position": { "x": 1395, "y": 795 },
       "width": 280,
       "height": 298,
