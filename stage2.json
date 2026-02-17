@@ -1,0 +1,121 @@
+{
+  "nodes": [
+    {
+      "id": "group-s2-1771319115262-xmxi",
+      "type": "group",
+      "data": { "label": "S2" },
+      "position": { "x": 150, "y": -705 },
+      "width": 1697,
+      "height": 1100,
+      "style": { "width": 1697, "height": 1100, "zIndex": -1 }
+    },
+    {
+      "id": "stage-2-1",
+      "type": "stage-2",
+      "data": {
+        "group": "S2",
+        "label": "Stage 2 — Conceptual Architecture Spine",
+        "description": "",
+        "aiPercentage": 25,
+        "humanPercentage": 75,
+        "aiResponsibilities": [],
+        "humanResponsibilities": [],
+        "stageNumber": 2,
+        "customFields": {}
+      },
+      "position": { "x": 15, "y": 60 },
+      "width": 300,
+      "height": 208,
+      "parentId": "group-s2-1771319115262-xmxi",
+      "extent": "parent"
+    },
+    {
+      "id": "insight-node-2",
+      "type": "insight-node",
+      "data": { "group": "S2", "label": "Insight", "description": "" },
+      "position": { "x": 210, "y": 285 },
+      "width": 300,
+      "height": 297,
+      "parentId": "group-s2-1771319115262-xmxi",
+      "extent": "parent"
+    },
+    {
+      "id": "outcome-node-3",
+      "type": "outcome-node",
+      "data": { "group": "S2", "label": "Outcome", "description": "" },
+      "position": { "x": 570, "y": 90 },
+      "width": 300,
+      "height": 299,
+      "parentId": "group-s2-1771319115262-xmxi",
+      "extent": "parent"
+    },
+    {
+      "id": "direction-node-4",
+      "type": "direction-node",
+      "data": { "group": "S2", "label": "Direction", "description": "" },
+      "position": { "x": 915, "y": 225 },
+      "width": 300,
+      "height": 299,
+      "parentId": "group-s2-1771319115262-xmxi",
+      "extent": "parent"
+    },
+    {
+      "id": "gate-problem-5",
+      "type": "gate-problem",
+      "data": {
+        "group": "S2",
+        "label": "S2 Blocking Gate",
+        "description": "",
+        "gateType": "architecture",
+        "decisionAuthority": "Human Only",
+        "gateStatus": "pending",
+        "aiPercentage": 0,
+        "humanPercentage": 100,
+        "gateChecklist": []
+      },
+      "position": { "x": 1095, "y": 540 },
+      "width": 402,
+      "height": 237,
+      "parentId": "group-s2-1771319115262-xmxi",
+      "extent": "parent"
+    },
+    {
+      "id": "alignment-gate-6",
+      "type": "alignment-gate",
+      "data": { "group": "S2", "label": "Alignment Gate", "description": "Non-blocking: مراجعة سريعة للتأكد أن العمود الفقري المفاهيمي لا يتجاوز النطاق ولا يقفز للتقنيات." },
+      "position": { "x": 1395, "y": 795 },
+      "width": 280,
+      "height": 298,
+      "parentId": "group-s2-1771319115262-xmxi",
+      "extent": "parent"
+    },
+    {
+      "id": "evidence-node-7",
+      "type": "evidence-node",
+      "data": {
+        "group": "S2",
+        "label": "Evidence",
+        "mandatory": true,
+        "description": "",
+        "evidenceKey": "s2_docs_pack",
+        "justification": "",
+        "owner": ""
+      },
+      "position": { "x": 1320, "y": 75 },
+      "width": 320,
+      "height": 290,
+      "parentId": "group-s2-1771319115262-xmxi",
+      "extent": "parent"
+    }
+  ],
+  "edges": [
+    { "id": "e-s2-insight", "type": "custom", "source": "stage-2-1", "target": "insight-node-2" },
+    { "id": "e-insight-outcome", "type": "custom", "source": "insight-node-2", "target": "outcome-node-3" },
+    { "id": "e-outcome-direction", "type": "custom", "source": "outcome-node-3", "target": "direction-node-4" },
+    { "id": "e-direction-gate", "type": "custom", "source": "direction-node-4", "target": "gate-problem-5" },
+    { "id": "e-gate-alignment", "type": "custom", "source": "gate-problem-5", "target": "alignment-gate-6" },
+    { "id": "e-evidence-gate", "type": "custom", "source": "evidence-node-7", "target": "gate-problem-5", "label": "evidence" }
+  ],
+  "evidence": [],
+  "exportedAt": ""
+}
